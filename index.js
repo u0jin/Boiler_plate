@@ -7,12 +7,14 @@ const mongoose = require('mongoose')
 const {User} = require("./models/User");
 const bodyParser = require('body-parser');
 
+const config = require("./config/key");
+
 //서버에서 받은 데이터 분석해서 가져올 수 있게 해줌
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 
-mongoose.connect('mongodb+srv://root:1234@boilerplate.6ur9n.mongodb.net/<dbname>?retryWrites=true&w=majority',{
+mongoose.connect(config.mongoURI,{
     useNewUrlParser: true, useUnifiedTopology: true,
     useCreateIndex: true, useFindAndModify: false
 }).then(() => console.log("MongoDB Connected"))
@@ -21,7 +23,7 @@ mongoose.connect('mongodb+srv://root:1234@boilerplate.6ur9n.mongodb.net/<dbname>
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello ujin~~!')
 })
 
 
