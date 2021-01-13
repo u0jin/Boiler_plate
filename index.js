@@ -9,6 +9,9 @@ const bodyParser = require('body-parser');
 
 const config = require("./config/key");
 
+const cookieParser = require('cookie-parser');
+
+
 //서버에서 받은 데이터 분석해서 가져올 수 있게 해줌
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -54,10 +57,13 @@ app.post('/login', (req, res) => {
       return res.json({loginSuccess : false, message:"비밀번호가 틀렸습니다."})
 
       user.generateToken((err,user) => {
+        if (err) return res.status(400).send(err);
+
+        res.cookie("x_auth", user.token)
+          .status(200)
+          .json({ loginSuccess: true, userId: user._id })
 
       })
-    
-    
     })
   })
 })
